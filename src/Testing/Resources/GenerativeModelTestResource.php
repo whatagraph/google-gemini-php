@@ -46,6 +46,11 @@ final class GenerativeModelTestResource implements GenerativeModelContract
         return $this->record(method: __FUNCTION__, args: func_get_args(), model: $this->model);
     }
 
+    public function withSystemInstruction(Content $systemInstruction): self
+    {
+        return $this->record(method: __FUNCTION__, args: func_get_args(), model: $this->model);
+    }
+
     public function withSafetySetting(SafetySetting $safetySetting): self
     {
         $this->recordFunctionCall(method: __FUNCTION__, args: func_get_args(), model: $this->model);
@@ -60,17 +65,10 @@ final class GenerativeModelTestResource implements GenerativeModelContract
         return $this;
     }
 
-    public function withSystemInstruction(Content $systemInstruction): self
-    {
-		$this->recordFunctionCall(method: __FUNCTION__, args: func_get_args(), model: $this->model);
-
-		return $this;
-    }
-
 	public function withTool(Tool $tool): self
 	{
 		$this->recordFunctionCall(method: __FUNCTION__, args: func_get_args(), model: $this->model);
 
-		return $this;
+        return $this;
 	}
 }

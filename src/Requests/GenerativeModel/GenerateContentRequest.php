@@ -26,7 +26,7 @@ class GenerateContentRequest extends Request
     /**
      * @param  array<string|Blob|array<string|Blob|UploadedFile>|Content|UploadedFile>  $parts
      * @param  array<SafetySetting>  $safetySettings
-	 * @param array<array-key, Tool> $tools
+	 * @param  array<array-key, Tool>  $tools
      */
     public function __construct(
         protected readonly string $model,

@@ -31,7 +31,7 @@ final class GenerativeModel implements GenerativeModelContract
 
     /**
      * @param  array<SafetySetting>  $safetySettings
-	 * @param array<array-key, Tool> $tools
+	 * @param  array<array-key, Tool>  $tools
      */
     public function __construct(
         private readonly TransporterContract $transporter,
