@@ -11,6 +11,8 @@ use Gemini\Data\Blob;
 use Gemini\Data\Content;
 use Gemini\Data\GenerationConfig;
 use Gemini\Data\SafetySetting;
+use Gemini\Data\Tool;
+use Gemini\Data\ToolConfig;
 use Gemini\Enums\ModelType;
 use Gemini\Requests\GenerativeModel\CountTokensRequest;
 use Gemini\Requests\GenerativeModel\GenerateContentRequest;
@@ -28,6 +30,7 @@ final class GenerativeModel implements GenerativeModelContract
 
     /**
      * @param  array<SafetySetting>  $safetySettings
+	 * @param array<array-key, Tool> $tools
      */
     public function __construct(
         private readonly TransporterContract $transporter,
@@ -35,6 +38,8 @@ final class GenerativeModel implements GenerativeModelContract
         public array $safetySettings = [],
         public ?GenerationConfig $generationConfig = null,
         public ?Content $systemInstruction = null,
+		public array $tools = [],
+		public ?ToolConfig $toolConfig = null,
     ) {
         $this->model = $this->parseModel(model: $model);
     }
@@ -59,6 +64,20 @@ final class GenerativeModel implements GenerativeModelContract
 
         return $this;
     }
+
+	public function withTool(Tool $tool): self
+	{
+		$this->tools[] = $tool;
+
+		return $this;
+	}
+
+	public function withToolConfig(ToolConfig $toolConfig): self
+	{
+		$this->toolConfig = $toolConfig;
+
+		return $this;
+	}
 
     /**
      * Runs a model's tokenizer on input content and returns the token count.
@@ -92,6 +111,8 @@ final class GenerativeModel implements GenerativeModelContract
                 safetySettings: $this->safetySettings,
                 generationConfig: $this->generationConfig,
                 systemInstruction: $this->systemInstruction,
+				tools: $this->tools,
+				toolConfig: $this->toolConfig,
             )
         );
 

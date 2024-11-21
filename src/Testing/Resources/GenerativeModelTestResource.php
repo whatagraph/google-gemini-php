@@ -9,6 +9,7 @@ use Gemini\Data\Blob;
 use Gemini\Data\Content;
 use Gemini\Data\GenerationConfig;
 use Gemini\Data\SafetySetting;
+use Gemini\Data\Tool;
 use Gemini\Resources\ChatSession;
 use Gemini\Resources\GenerativeModel;
 use Gemini\Responses\GenerativeModel\CountTokensResponse;
@@ -65,4 +66,11 @@ final class GenerativeModelTestResource implements GenerativeModelContract
 
 		return $this;
     }
+
+	public function withTool(Tool $tool): self
+	{
+		$this->recordFunctionCall(method: __FUNCTION__, args: func_get_args(), model: $this->model);
+
+		return $this;
+	}
 }
