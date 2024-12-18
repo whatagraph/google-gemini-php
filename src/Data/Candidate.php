@@ -61,6 +61,10 @@ final class Candidate implements Arrayable
             default => null,
         };
 
+		if (($attributes['avgLogprobs'] ?? null) === 'Infinity') {
+			$attributes['avgLogprobs'] = INF;
+		}
+
         return new self(
             content: $content,
             finishReason: $finishReason,
